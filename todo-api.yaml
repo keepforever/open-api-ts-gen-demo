@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Todo App API
+  description: API for managing todo items
+  version: 1.0.0
+servers:
+  - url: "http://localhost:3000/api"
+paths:
+  /todos:
+    get:
+      summary: Lists all the todo items
+      responses:
+        "200":
+          description: A list of todos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+    post:
+      summary: Creates a new todo item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewTodo"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+  /todos/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      summary: Updates a todo item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoUpdate"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The todo item's ID.
+        task:
+          type: string
+          description: The todo item's task description.
+        completed:
+          type: boolean
+          description: The todo item's completion status.
+      required:
+        - id
+        - task
+        - completed
+    NewTodo:
+      type: object
+      properties:
+        task:
+          type: string
+          description: The todo item's task description.
+      required:
+        - task
+    TodoUpdate:
+      type: object
+      properties:
+        task:
+          type: string
+          description: The updated task description.
+        completed:
+          type: boolean
+          description: The updated completion status.
