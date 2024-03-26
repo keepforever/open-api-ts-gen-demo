@@ -90,3 +90,20 @@ components:
         completed:
           type: boolean
           description: The updated completion status.
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The user's ID.
+        name:
+          type: string
+          description: The user's name.
+        favoriteThings:
+          type: array
+          items:
+            type: string
+          description: The user's favorite things.
+      required:
+        - id
+        - name
